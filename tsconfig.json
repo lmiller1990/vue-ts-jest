@@ -2,5 +2,13 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "CommonJS"
-  }
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
