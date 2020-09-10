@@ -1,7 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "outDir": "dist",
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "importsNotUsedAsValues": "remove",
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "declaration": true,
+    "removeComments": true,
+    "stripInternal": true
   },
   "include": [
     "src/**/*",
