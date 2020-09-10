@@ -1,5 +1,8 @@
 import { parse, compileScript, compileTemplate, BindingMetadata, SFCScriptBlock } from '@vue/compiler-sfc'
 import { transpile } from 'typescript'
+import { TsJestTransformer } from 'ts-jest/dist/ts-jest-transformer';
+import type { TransformedSource, Transformer, TransformOptions } from '@jest/transform';
+import type { Config } from '@jest/types';
 
 // Example in vue-loader: https://github.com/vuejs/vue-loader/commit/fb09c8b1755086c4e0627d0e83035e8ef53ed5c3
 // Script Setup RFC: https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md#transform-api
@@ -11,42 +14,36 @@ function transpileToCommonJS(code: string) {
   })
 }
 
-/** jest transformers must export a process function
- * @param {src} code to transform
- * @param {path} the path to the file
- */
-export function process(src: string, path: string) {
-  const { descriptor } = parse(src)
+class VueTsJestTransformer extends TsJestTransformer implements Transformer {
+  process(input: string, filePath: Config.Path, jestConfig: Config.ProjectConfig, transformOptions?: TransformOptions): TransformedSource | string {
+    const { descriptor } = parse(input)
+    let bindings: BindingMetadata | undefined
+    let scriptSetupResult: SFCScriptBlock
+    let output: TransformedSource | string = ''
 
-  let bindings: BindingMetadata
-  let scriptSetupResult: SFCScriptBlock
-
-  if (descriptor.script || descriptor.scriptSetup) {
-    scriptSetupResult = compileScript(descriptor)
-    bindings = scriptSetupResult.bindings
-  }
-
-  const template = compileTemplate({
-    filename: descriptor.filename,
-    source: descriptor.template.content,
-    compilerOptions: {
-      bindingMetadata: bindings
+    if (descriptor.script || descriptor.scriptSetup) {
+      scriptSetupResult = compileScript(descriptor)
+      bindings = scriptSetupResult.bindings
+      output = super.process(scriptSetupResult.content, filePath, jestConfig, transformOptions)
+      const template = compileTemplate({
+        filename: descriptor.filename,
+        source: descriptor.template!.content,
+        compilerOptions: {
+          bindingMetadata: bindings
+        }
+      })
+      const templateCode = transpileToCommonJS(template.code)
+      // this is fairly dirty
+      if (templateCode.includes('exports.render = render;')) {
+        output += templateCode + ';exports.default = {...exports.default, render};'
+      } else {
+        output += templateCode + ';exports.default = {...exports.default};'
+      }
     }
-  })
 
-  const scriptSetupCode = transpileToCommonJS(scriptSetupResult.content)
-  const templateCode = transpileToCommonJS(template.code)
-
-  let output = scriptSetupCode
-
-  // this is fairly dirty
-  if (templateCode.includes('exports.render = render;')) {
-    output += templateCode + ';exports.default = {...exports.default, render};'
-  } else {
-    output += templateCode + ';exports.default = {...exports.default};'
-  }
-
-  return {
-    code: output
+    // For js, ts, we can call super.process to ask ts-jest to compile. The rest we ask Vue compiler
+    return output
   }
 }
+
+export = new VueTsJestTransformer()
