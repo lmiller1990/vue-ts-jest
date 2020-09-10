@@ -1,15 +1,16 @@
 <template>
-  <div>Count is {{ count }}</div>
+  <div>Count: {{ count }}</div>
   <div>{{ computedMsg }}</div>
 </template>
 
 <script lang="ts">
-declare global {
-  interface Window {
-    performGlobalSideEffect: () => void
-  }
-}
-window.performGlobalSideEffect()
+// TODO: I think this should work. Maybe not?
+// declare global {
+//   interface Window {
+//     performGlobalSideEffect: () => void
+//   }
+// }
+// window.performGlobalSideEffect()
 
 // this can be imported as `import { named } from './*.vue'`
 export const named = 1

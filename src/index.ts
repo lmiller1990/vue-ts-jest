@@ -27,7 +27,7 @@ export function process(src: string, path: string) {
   }
 
   const template = compileTemplate({
-    filename: 'component.vue',
+    filename: descriptor.filename,
     source: descriptor.template.content,
     compilerOptions: {
       bindingMetadata: bindings
