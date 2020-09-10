@@ -14,7 +14,7 @@ test('works on a basic component', () => {
   expect(document.body.outerHTML).toContain('Count: 5')
 })
 
-test('works on a complex component', () => {
+xtest('works on a complex component', () => {
   mount(KitchenSink, { msg: 'hello world' })
   expect(document.body.outerHTML).toContain('Count: 5')
   expect(document.body.outerHTML).toContain('hello world')

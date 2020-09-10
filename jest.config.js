@@ -5,7 +5,7 @@ module.exports = {
   },
   globals: {
     "ts-jest": {
-      isolatedModules: true,
+      isolatedModules: false,
       tsConfig: require.resolve("./tsconfig.json"),
     }
   }
