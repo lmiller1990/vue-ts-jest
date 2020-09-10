@@ -3,4 +3,10 @@ module.exports = {
   transform: {
     '.*\\.(vue)$': '<rootDir>/dist/index.js',
   },
-};
+  globals: {
+    "ts-jest": {
+      isolatedModules: false,
+      tsConfig: require.resolve("./tsconfig.json"),
+    }
+  }
+}
