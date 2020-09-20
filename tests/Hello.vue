@@ -2,9 +2,21 @@
   <button @click="inc">Count: {{ count }}</button>
 </template>
 
-<script setup="props, { emit }" lang="ts">
-import { ref } from 'vue'
+<script lang="ts">
+import {
+  defineComponent,
+  ref
+} from 'vue'
 
-export const count = ref<string>(5)
-export const inc = () => count.value++
+export default defineComponent({
+  setup() {
+    const count = ref<string>(5)
+    const inc = () => count.value++
+
+    return {
+      count,
+      inc
+    }
+  }
+})
 </script>
