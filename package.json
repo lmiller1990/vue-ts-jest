@@ -9,12 +9,12 @@
   "devDependencies": {
     "@jest/transform": "^26.3.0",
     "@jest/types": "^26.3.0",
-    "@vue/compiler-sfc": "^3.0.0-rc.10",
+    "@vue/compiler-sfc": "^3.0.0",
     "jest": "^26.4.2",
     "prettier": "^2.1.1",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2",
-    "vue": "^3.0.0-rc.10"
+    "vue": "^3.0.0"
   },
   "scripts": {
     "build": "tsc",
