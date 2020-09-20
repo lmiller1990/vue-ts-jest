@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remove-vue-import should remove all vue imports 1`] = `
+"\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.default = vue_1.defineComponent({
+    setup: function () {
+        var count = vue_1.ref(5);
+        var inc = function () { return count.value++; };
+        return {
+            count: count,
+            inc: inc
+        };
+    }
+});
+"
+`;
+
+exports[`remove-vue-import should remove all vue imports 2`] = `
+"\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.default = vue_1.defineComponent({
+    setup: function () {
+        var count = vue_1.ref(5);
+        var inc = function () { return count.value++; };
+        return {
+            count: count,
+            inc: inc
+        };
+    }
+});
+"
+`;
+
+exports[`remove-vue-import should remove all vue imports 3`] = `
+"\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.default = vue_1.defineComponent({
+    setup: function () {
+        var count = vue_1.ref(5);
+        var inc = function () { return count.value++; };
+        vue_1.bar();
+        return {
+            count: count,
+            inc: inc
+        };
+    }
+});
+"
+`;
