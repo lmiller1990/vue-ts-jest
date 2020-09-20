@@ -4,6 +4,7 @@
     "module": "CommonJS",
     "outDir": "dist",
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "importsNotUsedAsValues": "remove",
