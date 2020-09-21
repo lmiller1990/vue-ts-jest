@@ -16,7 +16,7 @@ class VueTsJestTransformer extends TsJestTransformer implements Transformer {
     if (descriptor.script || descriptor.scriptSetup) {
       scriptSetupResult = compileScript(descriptor)
       bindings = scriptSetupResult.bindings
-      output = super.process(scriptSetupResult.content, `${filePath}.ts`, jestConfig, transformOptions)
+      output = super.process(scriptSetupResult.loc.source, `${filePath}.ts`, jestConfig, transformOptions)
       const template = compileTemplate({
         filename: descriptor.filename,
         source: descriptor.template!.content,
